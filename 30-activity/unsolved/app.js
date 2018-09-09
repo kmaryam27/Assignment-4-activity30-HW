@@ -78,7 +78,7 @@ commandSelected.forEach(element => {
     if (cmd === 'print') {//if client types print
       document.getElementById('content').style.cssFloat = "left";
       document.getElementById('content').style.textAlign = "left";
-      $(employeeList).printAll();
+      printClass(employeeList).printAll();
      } 
      else if (cmd === 'verify') {//if client types verify
       document.getElementById('verifyDiv').style.display ="block";
@@ -136,7 +136,7 @@ document.getElementById('lookupSubmit').addEventListener('click', function(){
       for (let i = 0; i < employeeList.length; i++) {
         if (inputName.toUpperCase() === (employeeList[i].name).toUpperCase()) {
           isExist = true;
-          $(employeeList).print(i); 
+          printClass(employeeList).print(i); 
         }
       }
       if(isExist === false)
@@ -151,7 +151,7 @@ document.getElementById('containsSubmit').addEventListener('click', function(){
         for (let i = 0; i < employeeList.length; i++) {
           if ((employeeList[i].name).toUpperCase().includes(str.toUpperCase())) {
             checkEmployee = true;
-            $(employeeList).print(i);
+            printClass(employeeList).print(i);
           }
         }
         if(checkEmployee === false)
@@ -170,18 +170,18 @@ document.getElementById('updateSubmit').addEventListener('click', function(){
             employeeList[i].officeNum = inputNum;
             employeeList[i].phoneNum = inputPhone;
             checkEmployee = true;
-          $(employeeList).print(i);
+          printClass(employeeList).print(i);
         }/*else if (inputNum === employeeList[i].officeNum) {
           employeeList[i].name = inputName;
           employeeList[i].phoneNum = inputPhone;
           checkEmployee = true;
-        $(employeeList).print(i);
+        printClass(employeeList).print(i);
       }
       else if (inputPhone === employeeList[i].phoneNum) {
         employeeList[i].name = inputName;
         employeeList[i].officeNum = inputNum;
         checkEmployee = true;
-      $(employeeList).print(i);
+      printClass(employeeList).print(i);
     }*/
       }
       if(checkEmployee === false)
@@ -206,8 +206,8 @@ document.getElementById('addSubmit').addEventListener('click', function(){
     }
     if(checkEmployee === false){
       employeeList.push(employee);
-      // $(employeeList).printAll();
-      $(employeeList).print(employeeList.length -1);
+      // printClass(employeeList).printAll();
+      printClass(employeeList).print(employeeList.length -1);
     }else
       render('Employee added before');
 });
@@ -227,7 +227,7 @@ document.getElementById('deleteSubmit').addEventListener('click', function(){
         render('Employee Deleted');
         else
         render('Employee Not Found')
-      // $(employeeList).printAll();
+      // printClass(employeeList).printAll();
 });
 /************************************************************************** */
 document.getElementById('arrangeSubmit').addEventListener('click', function(){
@@ -249,5 +249,5 @@ document.getElementById('arrangeSubmit').addEventListener('click', function(){
       return a.officeNum-b.officeNum;
   });
   }
-  $(employeeList).printAll();
+  printClass(employeeList).printAll();
 });

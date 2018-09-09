@@ -1,4 +1,4 @@
-const $ = function (employeeList) {
+const printClass = function (employeeList) {
 
     //********************print functions*************************** */
     const printAll = function(){
