@@ -12,6 +12,21 @@ const $ = function (sel) {
         nodeList[i].classList.toggle(className);
       }
     }
+
+    const addNewClass = function (newClass) {
+    //  nodeList.forEach(e => (!e.classList.some(ce => String(ce) === newClass))?e.className += newClass : 0);/**classList has not some */
+      for (let i = 0; i < nodeList.length; i++) {
+        let classNode = nodeList[i].classList;
+        let checkClass = false;
+          for (let j = 0; j < classNode.length; j++) {
+            if(String(classNode[j]) === newClass)
+              checkClass = true;
+          }
+          if(checkClass === false)
+            nodeList[i].className +=  newClass;
+        
+      }
+    }
   
     const on = function (action, cb) {
       for (let i = 0; i < nodeList.length; i++) {
@@ -39,31 +54,25 @@ const $ = function (sel) {
         }    
   }
 
-      //********************print functions*************************** */
-      const printAll = function(employeeList){
-        for (let i = 0; i < employeeList.length; i++) {
-             render(`${employeeList[i].name}`);
-             render(`#${employeeList[i].officeNum}`);
-             render(`${employeeList[i].phoneNum}`);
-             breakLine();
-         }
-     }
+    const printAll = function(employeeList){
+      employeeList.map(e => {render(`${e.name}`);render(`#${e.officeNum}`);render(`${e.phoneNum}`);breakLine();});
+    }
 
-     const breakLine = function(){
-      document.getElementById('content').appendChild(document.createElement('br'));
-  }
+    const breakLine = function(){
+      nodeList.forEach(e => e.appendChild(document.createElement('br')));
+    }
 
-  const render = (...props) => {
-    props.forEach(e => {  
-       append(e);
-    });
-  }
+    const render = (...props) => {
+      props.forEach(e => {  
+        append(e);
+      });
+    }
   
-  const append = content => {
-    const p = document.createElement('p');
-    p.textContent = content;
-    document.getElementById('content').appendChild(p);
-  }
+    const append = content => {
+      const p = document.createElement('p');
+      p.textContent = content;
+      nodeList.forEach(e => e.appendChild(p));
+    }
   
   
     const publicAPI = {
@@ -74,7 +83,8 @@ const $ = function (sel) {
       html: html,
       empty: empty,
       printAll: printAll,
-      render: render
+      render: render,
+      addNewClass: addNewClass
     }
   
     return publicAPI;
