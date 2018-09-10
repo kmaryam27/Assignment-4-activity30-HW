@@ -1,20 +1,18 @@
 /***************************************************clean main tag header forms */
 const cleanPage = function(){
-  document.getElementById('verifyDiv').style.display ="none";
-  document.getElementById('lookupDiv').style.display ="none";
-  document.getElementById('containsDiv').style.display ="none";
-  document.getElementById('updateDiv').style.display ="none";
-  document.getElementById('addDiv').style.display ="none";
-  document.getElementById('deleteDiv').style.display ="none";
-  document.getElementById('arrangeDiv').style.display ="none";
+  $('#verifyDiv').addNewClass(' nonVisible');
+  $('#lookupDiv').addNewClass(' nonVisible');
+  $('#containsDiv').addNewClass(' nonVisible');
+  $('#updateDiv').addNewClass(' nonVisible');
+  $('#addDiv').addNewClass(' nonVisible');
+  $('#deleteDiv').addNewClass(' nonVisible');
+  $('#arrangeDiv').addNewClass(' nonVisible');
   }
 
 /******************************************************clean content div for input new data*/
   const cleanContent = function(){
-    if(document.getElementById('content').childNodes.length > 0){
-      $('#content').empty();
-      }
-      document.getElementById('content').style.textAlign = "center";
+    $('#content').empty();
+    $('#content').addNewClass('centerContent');
   }
 
 /******************************************************clean Page on load */
@@ -35,24 +33,23 @@ commandSelected.forEach(element => {
     let cmd = element.getAttribute('id');
 
     if (cmd === 'print') {//if client types print
-      document.getElementById('content').style.cssFloat = "left";
-      document.getElementById('content').style.textAlign = "left";
+      $('#content').toggleClass('centerContent');
       $('#content').printAll(employeeList);
      } 
      else if (cmd === 'verify') //if client types verify
-      document.getElementById('verifyDiv').style.display ="block";
+      $('#verifyDiv').toggleClass('nonVisible');
      else if (cmd === 'lookup')//if client types lookup
-      document.getElementById('lookupDiv').style.display ="block";
+      $('#lookupDiv').toggleClass('nonVisible');
     else if(cmd === 'contains')//if client types contains
-      document.getElementById('containsDiv').style.display ="block";
+      $('#containsDiv').toggleClass('nonVisible');
      else if(cmd === 'update')//if client types update
-      document.getElementById('updateDiv').style.display ="block";
+      $('#updateDiv').toggleClass('nonVisible');
     else if(cmd === 'add')//if client types add
-      document.getElementById('addDiv').style.display ="block";
+      $('#addDiv').toggleClass('nonVisible');
     else if(cmd === 'delete')//if client types delete
-      document.getElementById('deleteDiv').style.display ="block";
+      $('#deleteDiv').toggleClass('nonVisible');
     else if (cmd === 'arrange')//if client types arrange
-      document.getElementById('arrangeDiv').style.display ="block";
+      $('#arrangeDiv').toggleClass('nonVisible');
   });
 });
 //***************************************************************Verify */
