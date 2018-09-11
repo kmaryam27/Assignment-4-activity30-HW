@@ -95,18 +95,35 @@ $('#updateSubmit').on('click', function(){
   const inputName = $('#updateNameInput').val();
   const inputNum = $('#updateNumInput').val();
   const inputPhone = $('#updatePhoneInput').val();
+  let eList =[];
+  if(employeeList.find(e =>((inputName.toUpperCase() === e.name.toUpperCase())&&(inputNum == e.officeNum)&&(inputPhone == e.phoneNum))))
+     $('#content').render('Employee already exist');
+  else{
+  eList =  employeeList.filter(e =>((inputName.toUpperCase() === e.name.toUpperCase())&&(inputNum != e.officeNum)&&(inputPhone != e.phoneNum))||
+                                  ((inputName.toUpperCase() !== e.name.toUpperCase())&&(inputNum == e.officeNum)&&(inputPhone != e.phoneNum))||
+                                  ((inputName.toUpperCase() !== e.name.toUpperCase())&&(inputNum != e.officeNum)&&(inputPhone == e.phoneNum)));
 
-  const eList = employeeList.filter(e =>(((inputName.toUpperCase() === e.name.toUpperCase())&&(inputNum == e.officeNum))||
-                                     ((inputName.toUpperCase() === e.name.toUpperCase())&&(inputPhone == e.phoneNum))||
-                                     ((inputPhone == e.phoneNum)&&(inputNum == e.officeNum))));
-  if(eList.length > 0) {
+   if(eList.length === 1){
     eList[0].name = inputName;
     eList[0].phoneNum = inputPhone;
     eList[0].officeNum = inputNum;
     $('#content').printAll(eList);
-  }else
-    $('#content').render('Employee Not Found');
-
+   }else {
+    eList = employeeList.filter(e =>((inputName.toUpperCase() === e.name.toUpperCase())&&(inputNum == e.officeNum)&&(inputPhone != e.phoneNum))||
+                                     ((inputName.toUpperCase() === e.name.toUpperCase())&&(inputNum != e.officeNum)&&(inputPhone == e.phoneNum))||
+                                     ((inputName.toUpperCase() !== e.name.toUpperCase())&&(inputNum == e.officeNum)&&(inputPhone == e.phoneNum)));
+  
+    if(eList.length === 1) {
+    eList[0].name = inputName;
+    eList[0].phoneNum = inputPhone;
+    eList[0].officeNum = inputNum;
+    $('#content').printAll(eList);
+  }else if(eList.length> 1)
+  $('#content').render('more than one Employee with this information for update');
+  else
+  $('#content').render('Employee Not Found');
+  }
+}
 });
 /*******************************************************************add */
 $('#addSubmit').on('click', function(){
@@ -137,16 +154,17 @@ $('#deleteSubmit').on('click', function(){
   event.preventDefault();
 
   const inputName = $('#deleteInput').val();
-  if(employeeList.find(e => e.name.toUpperCase() === inputName.toUpperCase())){
+  if(employeeList.filter(e => e.name.toUpperCase() === inputName.toUpperCase())){
     let i = 0;
+    let employeeCounter = 0;
     while ( i < employeeList.length) {
         if ((employeeList[i].name).toUpperCase() === inputName.toUpperCase()) {
+          employeeCounter ++;
           employeeList.splice(i,1);
-          $('#content').render('Employee Deleted');
-          break;
         }else
           i++; 
-      }    
+      } 
+      $('#content').render(employeeCounter + ' Employee Deleted');   
   }else
       $('#content').render('Employee Not Found')
 });
